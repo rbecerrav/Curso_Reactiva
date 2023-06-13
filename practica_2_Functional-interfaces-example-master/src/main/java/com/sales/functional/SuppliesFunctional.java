@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 public class SuppliesFunctional {
     static ArrayList<Sale> sales = Database.loadDatabase();
     public static void main(String[] args) {
-        System.out.println("Bienvenido a la tienda de suministros");
         loadMenu();
 
     }
@@ -64,7 +63,6 @@ public class SuppliesFunctional {
     }
 
     public static void loadMenu(){
-        System.out.println("Hola1");
         Scanner sc = new Scanner(System.in);
         menu();
         System.out.print("Type option: ");
