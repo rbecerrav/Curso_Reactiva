@@ -91,8 +91,17 @@ public class SuppliesFunctional {
                 totalSale();
                 break;
             case "7":
-                System.out.println("7. Ventas en donde compró una mujer en la tienda(in store)");
+                System.out.println("Ventas en donde compró una mujer en la tienda(in store)");
                 womanSalesInStore();
+                break;
+
+            case "9":
+                System.out.println("hombres y mujeres que usaron cupón");
+                menAndWomenCoupon();
+                break;
+            case "10":
+                System.out.println("Venta con mayor costo y menor costo");
+                maxAndMinSale();
                 break;
             default:
                 System.out.println("ERROR en el input, este metodo no ha sido creado. Intente de nuevo");
@@ -139,9 +148,25 @@ public class SuppliesFunctional {
     }
 
     private static void totalSale() {
-        sales.forEach(sale -> System.out.println("para el cliente: "+sale.getCustomer()+ "\n Total sale: "+sale.getTotal()));
+        sales.forEach(sale -> System.out.println("para el cliente: "+sale.getCustomer() + "\n Total sale: "+sale.getTotal()));
     }
     private static void womanSalesInStore(){
-        terminar
+        Function<Sale,String> getGender = sale -> sale.getCustomer().getGender();
+
+        ArrayList<Sale> salesByWoman = sales.stream().filter(sale -> getGender.apply(sale).equals("F"))
+                .filter(sale -> sale.getPurchasedMethod().equals("in store"))
+                .collect(Collectors.toCollection(ArrayList::new));
+        salesByWoman.forEach(System.out::println);
+    }
+    private static void menAndWomenCoupon(){
+        Predicate<Sale> couponUsageByMan = sale -> sale.getCustomer().getGender().equals("M") && sale.getCouponUsed().equals(true);
+        Predicate<Sale> couponUsageByWoman = sale -> sale.getCustomer().getGender().equals("F") && sale.getCouponUsed().equals(true);
+        System.out.println("Hombres que usaron cupón: "+sales.stream().filter(couponUsageByMan).count());
+        System.out.println("Mujeres que usaron cupón: "+sales.stream().filter(couponUsageByWoman).count());
+    }
+    private static void maxAndMinSale(){
+        Function<Sale,Double> getTotal = sale -> sale.getTotal();
+        System.out.println("Venta con mayor costo: "+sales.stream().max(Comparator.comparing(getTotal)).get());
+        System.out.println("Venta con menor costo: "+sales.stream().min(Comparator.comparing(getTotal)).get());
     }
 }
