@@ -86,11 +86,20 @@ public class SuppliesFunctional {
                 System.out.print("Cual es el numero de satisfacción por que quiere filtrar (1-5): ");
                 salesBySatisfaction(sc.nextLine());
                 break;
+            case "6":
+                System.out.println("Monto total pagado en la venta");
+                totalSale();
+                break;
+            case "7":
+                System.out.println("7. Ventas en donde compró una mujer en la tienda(in store)");
+                womanSalesInStore();
+                break;
             default:
                 System.out.println("ERROR en el input, este metodo no ha sido creado. Intente de nuevo");
         }
 
     }
+
 
     public static void getOnlinePurchases(){
         Predicate<Sale> onlinePurchased = sale -> sale.getPurchasedMethod().equals("Online");
@@ -127,5 +136,12 @@ public class SuppliesFunctional {
     public static void salesBySatisfaction(String inSatis){
         Consumer<String> satisfaction = satis -> sales.stream().filter(sale -> sale.getCustomer().getSatisfaction().toString().equals(satis)).collect(Collectors.toCollection(ArrayList::new)).forEach(System.out::println);
         satisfaction.accept(inSatis);
+    }
+
+    private static void totalSale() {
+        sales.forEach(sale -> System.out.println("para el cliente: "+sale.getCustomer()+ "\n Total sale: "+sale.getTotal()));
+    }
+    private static void womanSalesInStore(){
+        terminar
     }
 }
