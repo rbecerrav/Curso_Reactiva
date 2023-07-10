@@ -13,7 +13,8 @@ java {
 }
 
 repositories {
-    maven { url "https://artifactory.apps.bancolombia.com/maven-bancolombia" }
+    mavenCentral()
+    //maven { url "https://artifactory.apps.bancolombia.com/maven-bancolombia" }
 }
 
 dependencies {

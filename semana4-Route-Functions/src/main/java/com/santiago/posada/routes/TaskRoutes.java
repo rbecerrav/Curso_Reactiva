@@ -25,7 +25,20 @@ public class TaskRoutes {
         return route(GET("route/get/all"),
                 request -> ServerResponse
                         .ok()
-                        .body(BodyInserters.fromPublisher(service.getTasks(), ToDo.class)));
+                        .body(BodyInserters.fromPublisher(service.getTasks(), ToDo.class)))
+                .and(route(POST("route/create/task/{task}"),
+                        request -> ServerResponse
+                                .ok()
+                                .body(BodyInserters.fromPublisher(
+                                        service.addTask(request.pathVariable("task")), ToDo.class))))
+                .and(route(PUT("route/update/task/{id}/{newTask}"),
+                        request -> ServerResponse.ok()
+                                .body(BodyInserters.fromPublisher(
+                                        service.updateTask(
+                                                request.pathVariable("id"),request.pathVariable("newTask")), ToDo.class))))
+                .and(route(DELETE("route/delete/{id}"),request -> ServerResponse.ok().body(
+                        BodyInserters.fromPublisher(service
+                                .deleteTask(request.pathVariable("id")),Void.class))));
     }
 
     //Generar un tres router functions
